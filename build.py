@@ -45,6 +45,32 @@ def contrast(a: str, b: str) -> float:
     return (la + 0.05) / (lb + 0.05)
 
 
+MIN_DELTA_E = (
+    20.0  # CIE76 between any two dark-theme accents: sections must be told apart
+)
+
+
+def lab(hex_colour: str) -> tuple[float, float, float]:
+    def lin(c: int) -> float:
+        s = c / 255
+        return s / 12.92 if s <= 0.04045 else ((s + 0.055) / 1.055) ** 2.4
+
+    r, g, b = (lin(int(hex_colour[i : i + 2], 16)) for i in (1, 3, 5))
+    x = (0.4124 * r + 0.3576 * g + 0.1805 * b) / 0.95047
+    y = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    z = (0.0193 * r + 0.1192 * g + 0.9505 * b) / 1.08883
+
+    def f(t: float) -> float:
+        return t ** (1 / 3) if t > 0.008856 else 7.787 * t + 16 / 116
+
+    fx, fy, fz = f(x), f(y), f(z)
+    return 116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)
+
+
+def delta_e(a: str, b: str) -> float:
+    return sum((p - q) ** 2 for p, q in zip(lab(a), lab(b))) ** 0.5
+
+
 def validate(reg: dict) -> list[str]:
     errors: list[str] = []
     for key in ("network", "home", "groups", "sections"):
@@ -72,6 +98,17 @@ def validate(reg: dict) -> list[str]:
             elif (ratio := contrast(colour, ground)) < MIN_CONTRAST:
                 errors.append(
                     f"{sid}: accent.{theme} {colour} is {ratio:.2f}:1 on {ground}"
+                )
+    accents = [
+        (s["id"], s["accent"]["dark"])
+        for s in reg["sections"]
+        if HEX.match(s.get("accent", {}).get("dark", ""))
+    ]
+    for i, (id_a, col_a) in enumerate(accents):
+        for id_b, col_b in accents[i + 1 :]:
+            if (d := delta_e(col_a, col_b)) < MIN_DELTA_E:
+                errors.append(
+                    f"{id_a} vs {id_b}: accents too similar (ΔE {d:.1f} < {MIN_DELTA_E})"
                 )
     return errors
 
@@ -137,9 +174,13 @@ border-left:4px solid var(--d);color:inherit;text-decoration:none}}
 
 
 def build(reg: dict) -> None:
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    (DIST / "icons").mkdir(parents=True)
+    # Overwrite in place rather than rmtree: Dropbox holds freshly written
+    # folders open while it syncs, and a wipe-and-recreate fails on that lock.
+    (DIST / "icons").mkdir(parents=True, exist_ok=True)
+    wanted = {f"{s['id']}.svg" for s in reg["sections"]} | {"network.svg"}
+    for stale in (DIST / "icons").glob("*.svg"):
+        if stale.name not in wanted:
+            stale.unlink()
     payload = json.dumps(reg, separators=(",", ":"), ensure_ascii=False).replace(
         "</", "<\\/"
     )
