@@ -1,4 +1,4 @@
-# RANGER — the network kit
+# Telemetrics — the network kit
 
 Nine (and counting) published pages share one identity: **network chrome outside, section
 identity inside**. This folder is the single source of that chrome.
@@ -16,7 +16,7 @@ docs/             what the gcicc/suite Pages repo serves (generated, do not edit
 
 | Layer | What | Rule |
 |---|---|---|
-| 1. Network chrome | masthead (wordmark, grouped section links, current section in its accent), footer (`A RANGER section — X · built · refresh · all sections`), favicon, `Title — RANGER` | **every section, no exceptions** |
+| 1. Network chrome | masthead (wordmark, grouped section links, current section in its accent), footer (`A Telemetrics section — X · built · refresh · all sections`), favicon, `Title — Telemetrics` | **every section, no exceptions** |
 | 2. Shared tokens | `--net-*` colours, Archivo + IBM Plex Mono, light/dark | every section whose interior allows it |
 | 3. Section interior | the site's own layout | free. GRUDGE keeps its Drudge look on purpose |
 
@@ -25,7 +25,7 @@ masthead ground in either theme.
 
 ## Section sound
 
-Each section sets `sound` in `suite.json`: `morse` (the network name in CW), `teletype`
+Each section sets `sound` in `suite.json`: `morse` (the network call sign, `callsign` in suite.json, in CW), `teletype`
 (teleprinter clatter + carriage bell), `bell` (three-strike opening bell) or `none`. All are
 synthesized in the browser with Web Audio — no audio files, no licences, no requests.
 
@@ -61,6 +61,6 @@ built page by serving it *and* `docs/` from the same local server with the snipp
 
 ## What keeps this current
 
-- A new published page joins RANGER by the recipe above — rule in `Dropbox/CLAUDE.md`.
+- A new published page joins Telemetrics by the recipe above — rule in `Dropbox/CLAUDE.md`.
 - `03-Tools/project-management` liveness checks cover every `url` in `suite.json`.
 - Renaming the network is one field (`network`) and one rebuild.

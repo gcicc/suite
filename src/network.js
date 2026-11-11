@@ -1,4 +1,4 @@
-/* RANGER network chrome — masthead, footer, favicon and title for one section.
+/* Telemetrics network chrome — masthead, footer, favicon and title for one section.
  *
  * Include on any section page:
  *   <link rel="stylesheet" href="https://gcicc.github.io/suite/network.css">
@@ -127,7 +127,12 @@
    * no extra requests. The masthead toggle mutes it; the choice persists.
    */
   var MUTE_KEY = "range-sting-muted";
-  var MORSE = { A: ".-", E: ".", G: "--.", N: "-.", R: ".-." };
+  // Full A–Z, so any call sign in suite.json works.
+  var MORSE = {
+    A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.", H: "....", I: "..",
+    J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
+    S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-", Y: "-.--", Z: "--.."
+  };
 
   function store(kind, key, value) {
     try {
@@ -141,10 +146,10 @@
   function muted() { return store("localStorage", MUTE_KEY) === "1"; }
 
   var STINGS = {
-    // Morse for the network name, 700 Hz CW at ~20 wpm.
+    // Morse for the network call sign (short) or name, 700 Hz CW at ~20 wpm.
     morse: function (ctx, out) {
       var unit = 0.06, t = ctx.currentTime + 0.05;
-      REGISTRY.network.toUpperCase().split("").forEach(function (ch) {
+      (REGISTRY.callsign || REGISTRY.network).toUpperCase().split("").forEach(function (ch) {
         (MORSE[ch] || "").split("").forEach(function (sym) {
           var len = sym === "." ? unit : unit * 3;
           var osc = ctx.createOscillator(), g = ctx.createGain();

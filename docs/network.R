@@ -1,4 +1,4 @@
-# RANGER network chrome for Shiny apps.
+# Telemetrics network chrome for Shiny apps.
 #
 #   source("https://gcicc.github.io/suite/network.R")   # or a vendored copy
 #   ui <- page_fillable(theme = range_theme(), range_chrome("newsscraper"), ...)

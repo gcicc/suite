@@ -1,4 +1,4 @@
-"""Build the RANGER network kit from suite.json into dist/.
+"""Build the Telemetrics network kit from suite.json into dist/.
 
     python build.py            # validate suite.json, write docs/
     python build.py --check    # validate only

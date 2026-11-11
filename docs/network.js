@@ -1,4 +1,4 @@
-/* RANGER network chrome — masthead, footer, favicon and title for one section.
+/* Telemetrics network chrome — masthead, footer, favicon and title for one section.
  *
  * Include on any section page:
  *   <link rel="stylesheet" href="https://gcicc.github.io/suite/network.css">
@@ -11,7 +11,7 @@
  */
 (function () {
   "use strict";
-  var REGISTRY = {"network":"RANGER","tagline":"Reality Against Narrative — Gauged, Evidenced, Recorded","home":"https://gcicc.github.io/suite/","groups":["News","Trackers","Library","Tools"],"sections":[{"id":"grudge","name":"GRUDGE","group":"News","live":true,"sound":"teletype","url":"https://gcicc.github.io/GRUDGE/","purpose":"The tabloid desk: drama-scored headlines, Drudge style.","accent":{"dark":"#ff6b60","light":"#c0392f"}},{"id":"newsscraper","name":"Wire","group":"News","live":true,"sound":"bell","url":"https://gcicc.github.io/newsscraper/","purpose":"Everything on Drudge, Fox and the financial wires, plus headlines by category. No ads.","accent":{"dark":"#8792a8","light":"#5c667a"}},{"id":"hangar","name":"Hangar","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/hangar/","purpose":"SpaceX and Tesla: stated targets against the launch and production record.","accent":{"dark":"#3987e5","light":"#2a78d6"}},{"id":"overhang","name":"Overhang","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/overhang/","purpose":"AI: what has been claimed against what has been measured.","accent":{"dark":"#d36be0","light":"#9b3aa8"}},{"id":"uplift","name":"Uplift","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/uplift/","purpose":"Human enhancement and longevity, through registered clinical trials.","accent":{"dark":"#7fd4e8","light":"#1f7f99"}},{"id":"clintrialist","name":"ClinTrialist","group":"Trackers","live":true,"sound":"morse","url":"https://clintrialist.github.io/clintrialist-report/","purpose":"Daily pharma and biostatistics aggregator.","accent":{"dark":"#2a9d8f","light":"#1d7a6f"}},{"id":"bible-study","name":"Bible Study","group":"Library","live":true,"sound":"none","url":"https://gcicc.github.io/bible-study/","purpose":"Scripture as a network: citations, people, themes and genealogies across fourteen panels.","accent":{"dark":"#b7ae74","light":"#6b6430"}},{"id":"world-history","name":"World History","group":"Library","live":true,"sound":"none","url":"https://gcicc.github.io/world-history/","purpose":"Who and where across history, with the spread of mathematics and statistics.","accent":{"dark":"#9ccc65","light":"#557a1f"}},{"id":"claude-trends","name":"Claude Trends","group":"Tools","live":true,"sound":"morse","url":"https://gcicc.github.io/claude-trends/","purpose":"What is new in how people use Claude, sweep by sweep.","accent":{"dark":"#ffa14a","light":"#b85c00"}},{"id":"teleprompter","name":"Teleprompter","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/pga-teleprompter/","purpose":"Chord sheets and lyrics for 1,215 songs, on stage.","accent":{"dark":"#f2d544","light":"#7d6a00"}},{"id":"keystone","name":"Keystone","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/keystone-apps/","purpose":"The small-apps shelf: timers, simulations and trainers.","accent":{"dark":"#c2557f","light":"#a63d66"}}]};
+  var REGISTRY = {"network":"Telemetrics","callsign":"TLM","tagline":"stated ambition against measured reality","home":"https://gcicc.github.io/suite/","groups":["News","Trackers","Library","Tools"],"sections":[{"id":"grudge","name":"GRUDGE","group":"News","live":true,"sound":"teletype","url":"https://gcicc.github.io/GRUDGE/","purpose":"The tabloid desk: drama-scored headlines, Drudge style.","accent":{"dark":"#ff6b60","light":"#c0392f"}},{"id":"newsscraper","name":"Wire","group":"News","live":true,"sound":"bell","url":"https://gcicc.github.io/newsscraper/","purpose":"Everything on Drudge, Fox and the financial wires, plus headlines by category. No ads.","accent":{"dark":"#8792a8","light":"#5c667a"}},{"id":"hangar","name":"Hangar","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/hangar/","purpose":"SpaceX and Tesla: stated targets against the launch and production record.","accent":{"dark":"#3987e5","light":"#2a78d6"}},{"id":"overhang","name":"Overhang","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/overhang/","purpose":"AI: what has been claimed against what has been measured.","accent":{"dark":"#d36be0","light":"#9b3aa8"}},{"id":"uplift","name":"Uplift","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/uplift/","purpose":"Human enhancement and longevity, through registered clinical trials.","accent":{"dark":"#7fd4e8","light":"#1f7f99"}},{"id":"clintrialist","name":"ClinTrialist","group":"Trackers","live":true,"sound":"morse","url":"https://clintrialist.github.io/clintrialist-report/","purpose":"Daily pharma and biostatistics aggregator.","accent":{"dark":"#2a9d8f","light":"#1d7a6f"}},{"id":"bible-study","name":"Bible Study","group":"Library","live":true,"sound":"none","url":"https://gcicc.github.io/bible-study/","purpose":"Scripture as a network: citations, people, themes and genealogies across fourteen panels.","accent":{"dark":"#b7ae74","light":"#6b6430"}},{"id":"world-history","name":"World History","group":"Library","live":true,"sound":"none","url":"https://gcicc.github.io/world-history/","purpose":"Who and where across history, with the spread of mathematics and statistics.","accent":{"dark":"#9ccc65","light":"#557a1f"}},{"id":"claude-trends","name":"Claude Trends","group":"Tools","live":true,"sound":"morse","url":"https://gcicc.github.io/claude-trends/","purpose":"What is new in how people use Claude, sweep by sweep.","accent":{"dark":"#ffa14a","light":"#b85c00"}},{"id":"teleprompter","name":"Teleprompter","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/pga-teleprompter/","purpose":"Chord sheets and lyrics for 1,215 songs, on stage.","accent":{"dark":"#f2d544","light":"#7d6a00"}},{"id":"keystone","name":"Keystone","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/keystone-apps/","purpose":"The small-apps shelf: timers, simulations and trainers.","accent":{"dark":"#c2557f","light":"#a63d66"}}]};
   if (!REGISTRY) return;
 
   var me = document.currentScript || document.querySelector("script[data-section]");
@@ -127,7 +127,12 @@
    * no extra requests. The masthead toggle mutes it; the choice persists.
    */
   var MUTE_KEY = "range-sting-muted";
-  var MORSE = { A: ".-", E: ".", G: "--.", N: "-.", R: ".-." };
+  // Full A–Z, so any call sign in suite.json works.
+  var MORSE = {
+    A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.", H: "....", I: "..",
+    J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.", O: "---", P: ".--.", Q: "--.-", R: ".-.",
+    S: "...", T: "-", U: "..-", V: "...-", W: ".--", X: "-..-", Y: "-.--", Z: "--.."
+  };
 
   function store(kind, key, value) {
     try {
@@ -141,10 +146,10 @@
   function muted() { return store("localStorage", MUTE_KEY) === "1"; }
 
   var STINGS = {
-    // Morse for the network name, 700 Hz CW at ~20 wpm.
+    // Morse for the network call sign (short) or name, 700 Hz CW at ~20 wpm.
     morse: function (ctx, out) {
       var unit = 0.06, t = ctx.currentTime + 0.05;
-      REGISTRY.network.toUpperCase().split("").forEach(function (ch) {
+      (REGISTRY.callsign || REGISTRY.network).toUpperCase().split("").forEach(function (ch) {
         (MORSE[ch] || "").split("").forEach(function (sym) {
           var len = sym === "." ? unit : unit * 3;
           var osc = ctx.createOscillator(), g = ctx.createGain();

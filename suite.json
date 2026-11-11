@@ -1,6 +1,7 @@
 {
-  "network": "RANGER",
-  "tagline": "Reality Against Narrative — Gauged, Evidenced, Recorded",
+  "network": "Telemetrics",
+  "callsign": "TLM",
+  "tagline": "stated ambition against measured reality",
   "home": "https://gcicc.github.io/suite/",
   "groups": ["News", "Trackers", "Library", "Tools"],
   "sections": [
