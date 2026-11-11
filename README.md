@@ -35,7 +35,11 @@ masthead ground in either theme.
    <script src="https://gcicc.github.io/suite/network.js" data-section="<id>"
            data-built="<build timestamp>" data-next="<refresh cadence>" defer></script>
    ```
+   The `<link>` is optional: `network.js` loads `network.css` itself.
    Shiny: `range_chrome("<id>", built, next_refresh)` from `network.R`.
+   **Quarto with `embed-resources: true`:** never use a `<script src>` (pandoc would inline a
+   stale copy at render). Copy `02-Maintain/world-history/range.html` — a runtime loader —
+   change `dataset.section`, and add `include-in-header: range.html` under `format: html:`.
 4. Optional layer 2: map the page's own variables onto `--net-*`.
 5. Flip `live: true`, rebuild, publish `docs/` to `gcicc/suite`. Every other section picks the
    new link up on its next page load — no other site is rebuilt.

@@ -30,15 +30,33 @@
     return node;
   }
 
-  function isLight() {
+  // The ground the chrome sits on: the host's declared theme if it has one,
+  // otherwise the luminance of the host's actual background.
+  function hostGround() {
     var t = document.documentElement.getAttribute("data-theme");
-    if (t) return t === "light";
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    if (t === "light" || t === "dark") return t;
+    var probe = [document.body, document.documentElement];
+    for (var i = 0; i < probe.length; i++) {
+      var m = getComputedStyle(probe[i]).backgroundColor.match(/[\d.]+/g);
+      if (m && (m.length < 4 || +m[3] > 0)) {
+        var lum = (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255;
+        return lum < 0.5 ? "dark" : "light";
+      }
+    }
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   }
 
-  function paintAccent() {
-    if (!current) return;
-    document.documentElement.style.setProperty("--net-accent", isLight() ? current.accent.light : current.accent.dark);
+  function paint() {
+    var ground = hostGround();
+    [".net-mast", ".net-foot"].forEach(function (sel) {
+      var node = document.querySelector(sel);
+      if (!node) return;
+      node.classList.toggle("net-on-dark", ground === "dark");
+      node.classList.toggle("net-on-light", ground === "light");
+    });
+    if (current) {
+      document.documentElement.style.setProperty("--net-accent", ground === "light" ? current.accent.light : current.accent.dark);
+    }
   }
 
   function stylesheet() {
@@ -106,16 +124,16 @@
     if (document.querySelector(".net-mast")) return;
     stylesheet();
     fonts();
-    paintAccent();
     document.body.insertBefore(masthead(), document.body.firstChild);
     document.body.appendChild(footer());
     favicon();
     title();
+    paint();
     // Follow host theme toggles (HANGAR-family pages set data-theme on <html>).
-    new MutationObserver(paintAccent).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     if (window.matchMedia) {
       var mq = window.matchMedia("(prefers-color-scheme: light)");
-      if (mq.addEventListener) mq.addEventListener("change", paintAccent);
+      if (mq.addEventListener) mq.addEventListener("change", paint);
     }
   }
 

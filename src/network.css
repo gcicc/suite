@@ -57,6 +57,18 @@
   --net-hold: #c0392f;
 }
 
+/* Chrome matches the ground it sits on. network.js adds .net-on-dark / .net-on-light
+ * when the host has no data-theme, by reading the host's own background, so a dark
+ * page under a light OS never gets a light bar (and vice versa). */
+.net-on-dark {
+  --net-rack: #0b1017; --net-strip: #18212e; --net-rule: #26313f; --net-rule-bright: #3a4757;
+  --net-ink: #e9eef5; --net-ink-2: #a3b0c0; --net-ink-muted: #8d97a4;
+}
+.net-on-light {
+  --net-rack: #e2e5ea; --net-strip: #ffffff; --net-rule: #ccd2db; --net-rule-bright: #a8b2c0;
+  --net-ink: #131922; --net-ink-2: #48525f; --net-ink-muted: #636b77;
+}
+
 /* ---------- masthead ---------------------------------------------------- */
 
 .net-mast {
