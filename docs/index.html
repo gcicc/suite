@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RANGE — all sections</title>
+<link rel="icon" type="image/svg+xml" href="icons/network.svg">
+<link rel="stylesheet" href="network.css">
+<style>
+body{margin:0;background:var(--net-ground);color:var(--net-ink);font:15px/1.5 var(--net-display)}
+main{max-width:1080px;margin:0 auto;padding:2rem clamp(1rem,3vw,2.5rem)}
+h1{font-weight:800;letter-spacing:.3em;text-transform:uppercase;font-size:1.6rem;margin:0}
+.tag{color:var(--net-ink-2);font-family:var(--net-mono);font-size:.85rem;margin:.3rem 0 2rem}
+h2{font:500 .72rem var(--net-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--net-ink-muted);
+border-bottom:1px solid var(--net-rule);padding-bottom:.4rem;margin:2rem 0 .8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.6rem}
+.card{display:block;padding:.85rem 1rem;background:var(--net-strip);border:1px solid var(--net-rule);
+border-left:4px solid var(--d);color:inherit;text-decoration:none}
+.card:hover{border-color:var(--net-rule-bright);border-left-color:var(--d)}
+.card b{display:block;font-weight:800;letter-spacing:.06em}
+.card span{display:block;color:var(--net-ink-2);font-size:.88rem;margin-top:.2rem}
+@media (prefers-color-scheme: light){.card{border-left-color:var(--l)}.card:hover{border-left-color:var(--l)}}
+</style></head>
+<body>
+<main><h1>RANGE</h1><p class="tag">stated ambition against measured reality</p><section><h2>News</h2><div class="grid"><a class="card" href="https://gcicc.github.io/GRUDGE/" style="--d:#ff6b60;--l:#c0392f"><b>GRUDGE</b><span>The tabloid desk: drama-scored headlines, Drudge style.</span></a><a class="card" href="https://grego1074.shinyapps.io/Stable-NewsScraper/" style="--d:#8792a8;--l:#5c667a"><b>Wire</b><span>Everything on Drudge, Fox and the financial wires, plus headlines by category. No ads.</span></a></div></section><section><h2>Trackers</h2><div class="grid"><a class="card" href="https://gcicc.github.io/hangar/" style="--d:#3987e5;--l:#2a78d6"><b>Hangar</b><span>SpaceX and Tesla: stated targets against the launch and production record.</span></a><a class="card" href="https://gcicc.github.io/overhang/" style="--d:#d36be0;--l:#9b3aa8"><b>Overhang</b><span>AI: what has been claimed against what has been measured.</span></a><a class="card" href="https://gcicc.github.io/uplift/" style="--d:#7fd4e8;--l:#1f7f99"><b>Uplift</b><span>Human enhancement and longevity, through registered clinical trials.</span></a><a class="card" href="https://clintrialist.github.io/clintrialist-report/" style="--d:#2a9d8f;--l:#1d7a6f"><b>ClinTrialist</b><span>Daily pharma and biostatistics aggregator.</span></a></div></section><section><h2>Tools</h2><div class="grid"><a class="card" href="https://gcicc.github.io/pga-teleprompter/" style="--d:#d9a441;--l:#8a6510"><b>Teleprompter</b><span>Chord sheets and lyrics for 1,215 songs, on stage.</span></a><a class="card" href="https://gcicc.github.io/keystone-apps/" style="--d:#c2557f;--l:#a63d66"><b>Keystone</b><span>The small-apps shelf: timers, simulations and trainers.</span></a></div></section></main>
+<script src="network.js" data-section="" defer></script>
+</body></html>

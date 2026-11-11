@@ -1,0 +1,162 @@
+/* RANGE network chrome — the masthead and footer every section wears.
+ *
+ * Layer 1 of the brand system. Everything here is namespaced (--net-*, .net-*)
+ * so it can be dropped onto any host page — including GRUDGE's inline-styled
+ * Drudge look and Shiny's Bootstrap — without touching the host's own styles.
+ *
+ * Layer 2 (shared tokens) is opt-in: a host that wants the network look maps
+ * its own variables onto --net-* (see README).
+ *
+ * Section accents are identity colours, never data colours.
+ */
+
+:root {
+  --net-ground: #101722;
+  --net-rack: #0b1017;
+  --net-strip: #18212e;
+  --net-rule: #26313f;
+  --net-rule-bright: #3a4757;
+  --net-ink: #e9eef5;
+  --net-ink-2: #a3b0c0;
+  --net-ink-muted: #8d97a4;
+  --net-sodium: #ffa14a;
+  --net-go: #46d68a;
+  --net-hold: #ff6b60;
+  --net-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --net-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --net-accent: var(--net-sodium);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --net-ground: #eceef2;
+    --net-rack: #e2e5ea;
+    --net-strip: #ffffff;
+    --net-rule: #ccd2db;
+    --net-rule-bright: #a8b2c0;
+    --net-ink: #131922;
+    --net-ink-2: #48525f;
+    --net-ink-muted: #636b77;
+    --net-sodium: #b85c00;
+    --net-go: #157a48;
+    --net-hold: #c0392f;
+  }
+}
+
+:root[data-theme="light"] {
+  --net-ground: #eceef2;
+  --net-rack: #e2e5ea;
+  --net-strip: #ffffff;
+  --net-rule: #ccd2db;
+  --net-rule-bright: #a8b2c0;
+  --net-ink: #131922;
+  --net-ink-2: #48525f;
+  --net-ink-muted: #636b77;
+  --net-sodium: #b85c00;
+  --net-go: #157a48;
+  --net-hold: #c0392f;
+}
+
+/* ---------- masthead ---------------------------------------------------- */
+
+.net-mast {
+  all: initial;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.1rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 30px;
+  padding: 0 clamp(0.75rem, 3vw, 2.5rem);
+  background: var(--net-rack);
+  border-bottom: 2px solid var(--net-accent);
+  color: var(--net-ink-2);
+  font: 500 11px/30px var(--net-mono);
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 2147483000;
+}
+
+.net-mast *, .net-foot * { box-sizing: border-box; }
+
+.net-mast a { color: inherit; text-decoration: none; }
+
+.net-mast .net-mark {
+  color: var(--net-ink);
+  font: 800 12px/30px var(--net-display);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.net-mast .net-mark::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 0.55em;
+  vertical-align: 1px;
+  background: var(--net-accent);
+}
+
+.net-mast nav {
+  display: flex;
+  gap: 0 0.9rem;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.net-mast nav::-webkit-scrollbar { display: none; }
+
+.net-mast .net-group {
+  color: var(--net-ink-muted);
+  text-transform: uppercase;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  padding-left: 0.4rem;
+  border-left: 1px solid var(--net-rule-bright);
+}
+
+.net-mast .net-group:first-child { border-left: 0; padding-left: 0; }
+
+.net-mast nav a {
+  border-bottom: 2px solid transparent;
+  line-height: 26px;
+}
+
+.net-mast nav a:hover,
+.net-mast nav a:focus-visible { color: var(--net-ink); border-bottom-color: var(--net-rule-bright); }
+
+.net-mast nav a[aria-current="page"] {
+  color: var(--net-ink);
+  border-bottom-color: var(--net-accent);
+}
+
+@media (max-width: 640px) {
+  .net-mast nav { margin-left: 0; width: 100%; }
+  .net-mast .net-group { display: none; }
+}
+
+/* ---------- footer ------------------------------------------------------ */
+
+.net-foot {
+  all: initial;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 0.9rem clamp(0.75rem, 3vw, 2.5rem) 1.4rem;
+  background: var(--net-rack);
+  border-top: 1px solid var(--net-rule);
+  color: var(--net-ink-muted);
+  font: 400 11px/1.7 var(--net-mono);
+}
+
+.net-foot a { color: var(--net-ink-2); text-decoration: none; border-bottom: 1px solid var(--net-rule-bright); }
+.net-foot a:hover { color: var(--net-ink); }
+.net-foot .net-sep { margin: 0 0.5em; color: var(--net-rule-bright); }
+.net-foot b { color: var(--net-ink); font-weight: 500; }
+.net-foot .net-stale { color: var(--net-hold); }
