@@ -11,7 +11,7 @@
  */
 (function () {
   "use strict";
-  var REGISTRY = {"network":"RANGE","tagline":"stated ambition against measured reality","home":"https://gcicc.github.io/suite/","groups":["News","Trackers","Library","Tools"],"sections":[{"id":"grudge","name":"GRUDGE","group":"News","live":true,"url":"https://gcicc.github.io/GRUDGE/","purpose":"The tabloid desk: drama-scored headlines, Drudge style.","accent":{"dark":"#ff6b60","light":"#c0392f"}},{"id":"newsscraper","name":"Wire","group":"News","live":true,"url":"https://grego1074.shinyapps.io/Stable-NewsScraper/","purpose":"Everything on Drudge, Fox and the financial wires, plus headlines by category. No ads.","accent":{"dark":"#8792a8","light":"#5c667a"}},{"id":"hangar","name":"Hangar","group":"Trackers","live":true,"url":"https://gcicc.github.io/hangar/","purpose":"SpaceX and Tesla: stated targets against the launch and production record.","accent":{"dark":"#3987e5","light":"#2a78d6"}},{"id":"overhang","name":"Overhang","group":"Trackers","live":true,"url":"https://gcicc.github.io/overhang/","purpose":"AI: what has been claimed against what has been measured.","accent":{"dark":"#d36be0","light":"#9b3aa8"}},{"id":"uplift","name":"Uplift","group":"Trackers","live":true,"url":"https://gcicc.github.io/uplift/","purpose":"Human enhancement and longevity, through registered clinical trials.","accent":{"dark":"#7fd4e8","light":"#1f7f99"}},{"id":"clintrialist","name":"ClinTrialist","group":"Trackers","live":true,"url":"https://clintrialist.github.io/clintrialist-report/","purpose":"Daily pharma and biostatistics aggregator.","accent":{"dark":"#2a9d8f","light":"#1d7a6f"}},{"id":"bible-study","name":"Bible Study","group":"Library","live":false,"url":"https://gcicc.github.io/bible-study/","purpose":"Scripture as a network: citations, people, themes and genealogies across fourteen panels.","accent":{"dark":"#b7ae74","light":"#6b6430"}},{"id":"world-history","name":"World History","group":"Library","live":false,"url":"https://gcicc.github.io/world-history/","purpose":"Who and where across history, with the spread of mathematics and statistics.","accent":{"dark":"#9ccc65","light":"#557a1f"}},{"id":"claude-trends","name":"Claude Trends","group":"Tools","live":false,"url":"https://gcicc.github.io/claude-trends/","purpose":"What is new in how people use Claude, sweep by sweep.","accent":{"dark":"#ffa14a","light":"#b85c00"}},{"id":"teleprompter","name":"Teleprompter","group":"Tools","live":true,"url":"https://gcicc.github.io/pga-teleprompter/","purpose":"Chord sheets and lyrics for 1,215 songs, on stage.","accent":{"dark":"#f2d544","light":"#7d6a00"}},{"id":"keystone","name":"Keystone","group":"Tools","live":true,"url":"https://gcicc.github.io/keystone-apps/","purpose":"The small-apps shelf: timers, simulations and trainers.","accent":{"dark":"#c2557f","light":"#a63d66"}}]};
+  var REGISTRY = {"network":"RANGE","tagline":"stated ambition against measured reality","home":"https://gcicc.github.io/suite/","groups":["News","Trackers","Library","Tools"],"sections":[{"id":"grudge","name":"GRUDGE","group":"News","live":true,"sound":"teletype","url":"https://gcicc.github.io/GRUDGE/","purpose":"The tabloid desk: drama-scored headlines, Drudge style.","accent":{"dark":"#ff6b60","light":"#c0392f"}},{"id":"newsscraper","name":"Wire","group":"News","live":true,"sound":"bell","url":"https://grego1074.shinyapps.io/Stable-NewsScraper/","purpose":"Everything on Drudge, Fox and the financial wires, plus headlines by category. No ads.","accent":{"dark":"#8792a8","light":"#5c667a"}},{"id":"hangar","name":"Hangar","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/hangar/","purpose":"SpaceX and Tesla: stated targets against the launch and production record.","accent":{"dark":"#3987e5","light":"#2a78d6"}},{"id":"overhang","name":"Overhang","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/overhang/","purpose":"AI: what has been claimed against what has been measured.","accent":{"dark":"#d36be0","light":"#9b3aa8"}},{"id":"uplift","name":"Uplift","group":"Trackers","live":true,"sound":"morse","url":"https://gcicc.github.io/uplift/","purpose":"Human enhancement and longevity, through registered clinical trials.","accent":{"dark":"#7fd4e8","light":"#1f7f99"}},{"id":"clintrialist","name":"ClinTrialist","group":"Trackers","live":true,"sound":"morse","url":"https://clintrialist.github.io/clintrialist-report/","purpose":"Daily pharma and biostatistics aggregator.","accent":{"dark":"#2a9d8f","light":"#1d7a6f"}},{"id":"bible-study","name":"Bible Study","group":"Library","live":false,"sound":"none","url":"https://gcicc.github.io/bible-study/","purpose":"Scripture as a network: citations, people, themes and genealogies across fourteen panels.","accent":{"dark":"#b7ae74","light":"#6b6430"}},{"id":"world-history","name":"World History","group":"Library","live":false,"sound":"none","url":"https://gcicc.github.io/world-history/","purpose":"Who and where across history, with the spread of mathematics and statistics.","accent":{"dark":"#9ccc65","light":"#557a1f"}},{"id":"claude-trends","name":"Claude Trends","group":"Tools","live":false,"sound":"morse","url":"https://gcicc.github.io/claude-trends/","purpose":"What is new in how people use Claude, sweep by sweep.","accent":{"dark":"#ffa14a","light":"#b85c00"}},{"id":"teleprompter","name":"Teleprompter","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/pga-teleprompter/","purpose":"Chord sheets and lyrics for 1,215 songs, on stage.","accent":{"dark":"#f2d544","light":"#7d6a00"}},{"id":"keystone","name":"Keystone","group":"Tools","live":true,"sound":"none","url":"https://gcicc.github.io/keystone-apps/","purpose":"The small-apps shelf: timers, simulations and trainers.","accent":{"dark":"#c2557f","light":"#a63d66"}}]};
   if (!REGISTRY) return;
 
   var me = document.currentScript || document.querySelector("script[data-section]");
@@ -120,12 +120,138 @@
     document.title = t + " — " + REGISTRY.network;
   }
 
+  /* ---------- sting: a short synthesized sound per section ---------------
+   * Browsers refuse audio before a user gesture, so the sting is armed on load
+   * and plays on the first click or key press — once per section per browser
+   * session. Everything is synthesized with Web Audio: no files, no licences,
+   * no extra requests. The masthead toggle mutes it; the choice persists.
+   */
+  var MUTE_KEY = "range-sting-muted";
+  var MORSE = { A: ".-", E: ".", G: "--.", N: "-.", R: ".-." };
+
+  function store(kind, key, value) {
+    try {
+      var s = window[kind];
+      if (value === undefined) return s.getItem(key);
+      s.setItem(key, value);
+    } catch (e) { /* private mode or blocked storage: degrade to always-ask */ }
+    return null;
+  }
+
+  function muted() { return store("localStorage", MUTE_KEY) === "1"; }
+
+  var STINGS = {
+    // Morse for the network name, 700 Hz CW at ~20 wpm.
+    morse: function (ctx, out) {
+      var unit = 0.06, t = ctx.currentTime + 0.05;
+      REGISTRY.network.toUpperCase().split("").forEach(function (ch) {
+        (MORSE[ch] || "").split("").forEach(function (sym) {
+          var len = sym === "." ? unit : unit * 3;
+          var osc = ctx.createOscillator(), g = ctx.createGain();
+          osc.frequency.value = 700;
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(0.18, t + 0.005);
+          g.gain.setValueAtTime(0.18, t + len - 0.005);
+          g.gain.linearRampToValueAtTime(0, t + len);
+          osc.connect(g).connect(out);
+          osc.start(t); osc.stop(t + len + 0.01);
+          t += len + unit;
+        });
+        t += unit * 2;
+      });
+    },
+    // Teleprinter: irregular filtered-noise clacks, then the carriage bell.
+    teletype: function (ctx, out) {
+      var t = ctx.currentTime + 0.05, buf = ctx.createBuffer(1, ctx.sampleRate * 0.03, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 4);
+      for (var k = 0; k < 22; k++) {
+        var src = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+        src.buffer = buf; bp.type = "bandpass"; bp.frequency.value = 1800 + Math.random() * 1400; bp.Q.value = 3;
+        g.gain.value = 0.5;
+        src.connect(bp).connect(g).connect(out);
+        src.start(t);
+        t += 0.045 + Math.random() * 0.05;
+      }
+      bell(ctx, out, t + 0.05, 2093, 0.12, 0.6);
+    },
+    // Opening bell: three struck metallic tones (inharmonic partials).
+    bell: function (ctx, out) {
+      var t = ctx.currentTime + 0.05;
+      for (var k = 0; k < 3; k++) bell(ctx, out, t + k * 0.32, 880, 0.16, 1.4);
+    }
+  };
+
+  function bell(ctx, out, t, f, peak, decay) {
+    [1, 2.76, 5.4, 8.93].forEach(function (ratio, i) {
+      var osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.frequency.value = f * ratio;
+      g.gain.setValueAtTime(peak / (i + 1), t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + decay / (i * 0.6 + 1));
+      osc.connect(g).connect(out);
+      osc.start(t); osc.stop(t + decay);
+    });
+  }
+
+  function play(kind) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC || !STINGS[kind]) return;
+    var ctx = new AC(), out = ctx.createGain();
+    out.gain.value = 0.6;
+    out.connect(ctx.destination);
+    STINGS[kind](ctx, out);
+    setTimeout(function () { ctx.close(); }, 4000);
+  }
+
+  function armSting() {
+    if (!current || !current.sound || current.sound === "none") return;
+    var sessionKey = "range-sting-" + current.id;
+    if (store("sessionStorage", sessionKey)) return;
+    function fire() {
+      window.removeEventListener("pointerdown", fire, true);
+      window.removeEventListener("keydown", fire, true);
+      if (muted()) return;
+      store("sessionStorage", sessionKey, "1");
+      play(current.sound);
+    }
+    window.addEventListener("pointerdown", fire, true);
+    window.addEventListener("keydown", fire, true);
+  }
+
+  function soundToggle(mast) {
+    if (!current || !current.sound || current.sound === "none") return;
+    var btn = el("button", { type: "button", "class": "net-sound" });
+    function label() {
+      var off = muted();
+      btn.textContent = off ? "🔇" : "🔈";
+      btn.setAttribute("aria-pressed", off ? "true" : "false");
+      btn.setAttribute("aria-label", off ? "Network sound off — turn on" : "Network sound on — turn off");
+      btn.title = off ? "Sound off" : "Sound on (plays once per visit)";
+    }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var nowMuted = !muted();
+      store("localStorage", MUTE_KEY, nowMuted ? "1" : "0");
+      label();
+      if (!nowMuted) play(current.sound); // preview on unmute
+    });
+    label();
+    // Replay on demand. Plays even when muted: a click on "play" is the request.
+    var replay = el("button", { type: "button", "class": "net-sound", "aria-label": "Play the section sound again", title: "Play again" }, "▶");
+    replay.addEventListener("click", function (e) { e.stopPropagation(); play(current.sound); });
+    mast.insertBefore(replay, mast.children[1]);
+    mast.insertBefore(btn, mast.children[1]);
+  }
+
   function mount() {
     if (document.querySelector(".net-mast")) return;
     stylesheet();
     fonts();
-    document.body.insertBefore(masthead(), document.body.firstChild);
+    var mast = masthead();
+    soundToggle(mast);
+    document.body.insertBefore(mast, document.body.firstChild);
     document.body.appendChild(footer());
+    armSting();
     favicon();
     title();
     paint();

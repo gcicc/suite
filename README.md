@@ -23,6 +23,17 @@ docs/             what the gcicc/suite Pages repo serves (generated, do not edit
 Accents are identity, never data. `build.py` rejects any accent under 3:1 contrast on the
 masthead ground in either theme.
 
+## Section sound
+
+Each section sets `sound` in `suite.json`: `morse` (the network name in CW), `teletype`
+(teleprinter clatter + carriage bell), `bell` (three-strike opening bell) or `none`. All are
+synthesized in the browser with Web Audio — no audio files, no licences, no requests.
+
+Browsers block audio before a user gesture, so the sound plays on the **first click or key
+press**, once per section per browser session. The masthead carries a mute toggle (remembered
+in `localStorage`) and a ▶ replay button that plays on demand, even while muted. Pages used
+live or for focused reading (Teleprompter, Library) are `none`.
+
 ## Add a page to the network (the whole recipe)
 
 1. Add one entry to `suite.json` (`live: false` until its URL serves 200).

@@ -120,12 +120,138 @@
     document.title = t + " — " + REGISTRY.network;
   }
 
+  /* ---------- sting: a short synthesized sound per section ---------------
+   * Browsers refuse audio before a user gesture, so the sting is armed on load
+   * and plays on the first click or key press — once per section per browser
+   * session. Everything is synthesized with Web Audio: no files, no licences,
+   * no extra requests. The masthead toggle mutes it; the choice persists.
+   */
+  var MUTE_KEY = "range-sting-muted";
+  var MORSE = { A: ".-", E: ".", G: "--.", N: "-.", R: ".-." };
+
+  function store(kind, key, value) {
+    try {
+      var s = window[kind];
+      if (value === undefined) return s.getItem(key);
+      s.setItem(key, value);
+    } catch (e) { /* private mode or blocked storage: degrade to always-ask */ }
+    return null;
+  }
+
+  function muted() { return store("localStorage", MUTE_KEY) === "1"; }
+
+  var STINGS = {
+    // Morse for the network name, 700 Hz CW at ~20 wpm.
+    morse: function (ctx, out) {
+      var unit = 0.06, t = ctx.currentTime + 0.05;
+      REGISTRY.network.toUpperCase().split("").forEach(function (ch) {
+        (MORSE[ch] || "").split("").forEach(function (sym) {
+          var len = sym === "." ? unit : unit * 3;
+          var osc = ctx.createOscillator(), g = ctx.createGain();
+          osc.frequency.value = 700;
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(0.18, t + 0.005);
+          g.gain.setValueAtTime(0.18, t + len - 0.005);
+          g.gain.linearRampToValueAtTime(0, t + len);
+          osc.connect(g).connect(out);
+          osc.start(t); osc.stop(t + len + 0.01);
+          t += len + unit;
+        });
+        t += unit * 2;
+      });
+    },
+    // Teleprinter: irregular filtered-noise clacks, then the carriage bell.
+    teletype: function (ctx, out) {
+      var t = ctx.currentTime + 0.05, buf = ctx.createBuffer(1, ctx.sampleRate * 0.03, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 4);
+      for (var k = 0; k < 22; k++) {
+        var src = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+        src.buffer = buf; bp.type = "bandpass"; bp.frequency.value = 1800 + Math.random() * 1400; bp.Q.value = 3;
+        g.gain.value = 0.5;
+        src.connect(bp).connect(g).connect(out);
+        src.start(t);
+        t += 0.045 + Math.random() * 0.05;
+      }
+      bell(ctx, out, t + 0.05, 2093, 0.12, 0.6);
+    },
+    // Opening bell: three struck metallic tones (inharmonic partials).
+    bell: function (ctx, out) {
+      var t = ctx.currentTime + 0.05;
+      for (var k = 0; k < 3; k++) bell(ctx, out, t + k * 0.32, 880, 0.16, 1.4);
+    }
+  };
+
+  function bell(ctx, out, t, f, peak, decay) {
+    [1, 2.76, 5.4, 8.93].forEach(function (ratio, i) {
+      var osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.frequency.value = f * ratio;
+      g.gain.setValueAtTime(peak / (i + 1), t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + decay / (i * 0.6 + 1));
+      osc.connect(g).connect(out);
+      osc.start(t); osc.stop(t + decay);
+    });
+  }
+
+  function play(kind) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC || !STINGS[kind]) return;
+    var ctx = new AC(), out = ctx.createGain();
+    out.gain.value = 0.6;
+    out.connect(ctx.destination);
+    STINGS[kind](ctx, out);
+    setTimeout(function () { ctx.close(); }, 4000);
+  }
+
+  function armSting() {
+    if (!current || !current.sound || current.sound === "none") return;
+    var sessionKey = "range-sting-" + current.id;
+    if (store("sessionStorage", sessionKey)) return;
+    function fire() {
+      window.removeEventListener("pointerdown", fire, true);
+      window.removeEventListener("keydown", fire, true);
+      if (muted()) return;
+      store("sessionStorage", sessionKey, "1");
+      play(current.sound);
+    }
+    window.addEventListener("pointerdown", fire, true);
+    window.addEventListener("keydown", fire, true);
+  }
+
+  function soundToggle(mast) {
+    if (!current || !current.sound || current.sound === "none") return;
+    var btn = el("button", { type: "button", "class": "net-sound" });
+    function label() {
+      var off = muted();
+      btn.textContent = off ? "🔇" : "🔈";
+      btn.setAttribute("aria-pressed", off ? "true" : "false");
+      btn.setAttribute("aria-label", off ? "Network sound off — turn on" : "Network sound on — turn off");
+      btn.title = off ? "Sound off" : "Sound on (plays once per visit)";
+    }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var nowMuted = !muted();
+      store("localStorage", MUTE_KEY, nowMuted ? "1" : "0");
+      label();
+      if (!nowMuted) play(current.sound); // preview on unmute
+    });
+    label();
+    // Replay on demand. Plays even when muted: a click on "play" is the request.
+    var replay = el("button", { type: "button", "class": "net-sound", "aria-label": "Play the section sound again", title: "Play again" }, "▶");
+    replay.addEventListener("click", function (e) { e.stopPropagation(); play(current.sound); });
+    mast.insertBefore(replay, mast.children[1]);
+    mast.insertBefore(btn, mast.children[1]);
+  }
+
   function mount() {
     if (document.querySelector(".net-mast")) return;
     stylesheet();
     fonts();
-    document.body.insertBefore(masthead(), document.body.firstChild);
+    var mast = masthead();
+    soundToggle(mast);
+    document.body.insertBefore(mast, document.body.firstChild);
     document.body.appendChild(footer());
+    armSting();
     favicon();
     title();
     paint();

@@ -152,6 +152,16 @@
   .net-mast .net-group { display: none; }
 }
 
+.net-mast .net-sound {
+  all: unset;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 30px;
+  padding: 0 0.3rem;
+  opacity: 0.75;
+}
+.net-mast .net-sound:hover, .net-mast .net-sound:focus-visible { opacity: 1; outline: 1px solid var(--net-rule-bright); }
+
 /* ---------- footer ------------------------------------------------------ */
 
 .net-foot {

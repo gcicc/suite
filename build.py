@@ -29,6 +29,7 @@ REGISTRY = ROOT / "suite.json"
 RACK = {"dark": "#0b1017", "light": "#e2e5ea"}
 MIN_CONTRAST = 3.0
 HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
+SOUNDS = {"none", "morse", "teletype", "bell"}  # must match STINGS in src/network.js
 
 
 def luminance(hex_colour: str) -> float:
@@ -87,6 +88,8 @@ def validate(reg: dict) -> list[str]:
         if sid in seen:
             errors.append(f"{sid}: duplicate id")
         seen.add(sid)
+        if s.get("sound", "none") not in SOUNDS:
+            errors.append(f"{sid}: sound {s.get('sound')!r} not in {sorted(SOUNDS)}")
         if s.get("group") not in reg["groups"]:
             errors.append(f"{sid}: group {s.get('group')!r} not in groups")
         if not str(s.get("url", "")).startswith("https://"):
