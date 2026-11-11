@@ -1,4 +1,4 @@
-/* RANGE network chrome — masthead, footer, favicon and title for one section.
+/* RANGER network chrome — masthead, footer, favicon and title for one section.
  *
  * Include on any section page:
  *   <link rel="stylesheet" href="https://gcicc.github.io/suite/network.css">
