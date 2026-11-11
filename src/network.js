@@ -41,6 +41,13 @@
     document.documentElement.style.setProperty("--net-accent", isLight() ? current.accent.light : current.accent.dark);
   }
 
+  function stylesheet() {
+    // Self-loading, so a host needs one tag — and so embed-resources hosts
+    // (Quarto) can use the runtime loader without pandoc inlining a stale copy.
+    if (document.querySelector('link[href$="network.css"]')) return;
+    document.head.appendChild(el("link", { rel: "stylesheet", href: base + "network.css" }));
+  }
+
   function fonts() {
     if (document.querySelector('link[href*="family=IBM+Plex+Mono"]')) return;
     document.head.appendChild(el("link", {
@@ -97,6 +104,7 @@
 
   function mount() {
     if (document.querySelector(".net-mast")) return;
+    stylesheet();
     fonts();
     paintAccent();
     document.body.insertBefore(masthead(), document.body.firstChild);
