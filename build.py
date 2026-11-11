@@ -1,4 +1,4 @@
-"""Build the Telemetrics network kit from suite.json into dist/.
+"""Build the TELEMETRx network kit from suite.json into dist/.
 
     python build.py            # validate suite.json, write docs/
     python build.py --check    # validate only
@@ -148,6 +148,13 @@ def front_page(reg: dict) -> str:
         )
     name = html.escape(reg["network"])
     tagline = html.escape(reg.get("tagline", ""))
+    # Same wordmark rule as network.js: a trailing lowercase run is set apart.
+    tail = re.search(r"[a-z]+$", reg["network"])
+    mark = (
+        f'{html.escape(reg["network"][: tail.start()])}<span class="net-x">{tail.group()}</span>'
+        if tail
+        else name
+    )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -157,7 +164,7 @@ def front_page(reg: dict) -> str:
 <style>
 body{{margin:0;background:var(--net-ground);color:var(--net-ink);font:15px/1.5 var(--net-display)}}
 main{{max-width:1080px;margin:0 auto;padding:2rem clamp(1rem,3vw,2.5rem)}}
-h1{{font-weight:800;letter-spacing:.3em;text-transform:uppercase;font-size:1.6rem;margin:0}}
+h1{{font-weight:800;letter-spacing:.3em;font-size:1.6rem;margin:0}}
 .tag{{color:var(--net-ink-2);font-family:var(--net-mono);font-size:.85rem;margin:.3rem 0 2rem}}
 h2{{font:500 .72rem var(--net-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--net-ink-muted);
 border-bottom:1px solid var(--net-rule);padding-bottom:.4rem;margin:2rem 0 .8rem}}
@@ -170,7 +177,7 @@ border-left:4px solid var(--d);color:inherit;text-decoration:none}}
 @media (prefers-color-scheme: light){{.card{{border-left-color:var(--l)}}.card:hover{{border-left-color:var(--l)}}}}
 </style></head>
 <body>
-<main><h1>{name}</h1><p class="tag">{tagline}</p>{"".join(cards)}</main>
+<main><h1>{mark}</h1><p class="tag">{tagline}</p>{"".join(cards)}</main>
 <script src="network.js" data-section="" defer></script>
 </body></html>
 """

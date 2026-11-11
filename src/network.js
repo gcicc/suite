@@ -1,4 +1,4 @@
-/* Telemetrics network chrome — masthead, footer, favicon and title for one section.
+/* TELEMETRx network chrome — masthead, footer, favicon and title for one section.
  *
  * Include on any section page:
  *   <link rel="stylesheet" href="https://gcicc.github.io/suite/network.css">
@@ -74,9 +74,18 @@
     }));
   }
 
+  // The wordmark keeps its case; a trailing lowercase run ("x" in TELEMETRx) is
+  // set apart in the section accent, raised like the ℞ glyph.
+  function wordmark(node) {
+    var m = REGISTRY.network.match(/^(.*?)([a-z]+)$/);
+    node.appendChild(document.createTextNode(m ? m[1] : REGISTRY.network));
+    if (m) node.appendChild(el("span", { "class": "net-x" }, m[2]));
+    return node;
+  }
+
   function masthead() {
     var mast = el("header", { "class": "net-mast", role: "banner", "aria-label": REGISTRY.network + " network" });
-    mast.appendChild(el("a", { "class": "net-mark", href: REGISTRY.home, title: REGISTRY.network + " — all sections" }, REGISTRY.network));
+    mast.appendChild(wordmark(el("a", { "class": "net-mark", href: REGISTRY.home, title: REGISTRY.network + " — all sections" })));
     var nav = el("nav", { "aria-label": "Network sections" });
     REGISTRY.groups.forEach(function (group) {
       var members = sections.filter(function (s) { return s.group === group; });

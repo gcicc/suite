@@ -1,4 +1,4 @@
-/* Telemetrics network chrome — the masthead and footer every section wears.
+/* TELEMETRx network chrome — the masthead and footer every section wears.
  *
  * Layer 1 of the brand system. Everything here is namespaced (--net-*, .net-*)
  * so it can be dropped onto any host page — including GRUDGE's inline-styled
@@ -98,7 +98,17 @@
   color: var(--net-ink);
   font: 800 12px/30px var(--net-display);
   letter-spacing: 0.32em;
-  text-transform: uppercase;
+}
+
+/* Wordmark tail ("x" in TELEMETRx): accent, italic, raised like ℞. */
+.net-x {
+  color: var(--net-accent);
+  font-style: italic;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  position: relative;
+  top: -0.18em;
+  margin-left: -0.12em;
 }
 
 .net-mast .net-mark::before {
